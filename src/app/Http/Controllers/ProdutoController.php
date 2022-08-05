@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Fornecedor;
 use App\Item;
 use App\Produto;
 use App\Unidade;
@@ -28,7 +29,8 @@ class ProdutoController extends Controller
     public function create(Request $request)
     {
         $unidades = Unidade::all();
-        return view('app.produto.create', ['unidades' => $unidades]);
+        $fornecedores = Fornecedor::all();
+        return view('app.produto.create', ['unidades' => $unidades,'fornecedores'=>$fornecedores]);
     }
 
     /**
@@ -77,10 +79,13 @@ class ProdutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produto $produto)
+    public function edit(Item $produto)
     {
         $unidades = Unidade::all();
-        return view('app.produto.edit',['produto'=>$produto, 'unidades'=> $unidades]);
+        $fornecedores = Fornecedor::all();
+        return view('app.produto.edit',[
+            'produto'=>$produto, 'unidades'=> $unidades,'fornecedores'=> $fornecedores
+        ]);
     }
 
     /**
@@ -90,7 +95,7 @@ class ProdutoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Produto $produto,Request $request)
+    public function update(Item $produto,Request $request)
     {
         $regras = [
             'nome'                => 'required|min:3|max:40',
@@ -98,7 +103,7 @@ class ProdutoController extends Controller
             'peso'                => 'required|integer',
             'unidade_id'          => 'exists:unidades,id'
         ];
-        
+
         $feedback = [
             'required'            => 'O campo :attribute deve ser preenchido',
             'nome.min'            => 'O campo :attribute deve ter no minimo 3 caracter',

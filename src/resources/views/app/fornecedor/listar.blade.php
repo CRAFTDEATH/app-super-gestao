@@ -48,10 +48,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($fornecedores as $key => $produto)
+                                            @foreach ($fornecedor->produtos as $key => $produto)
                                             <tr>
-                                                <td>{{$fornecedor->produtos->}}</td>
-                                                <td></td>
+                                                <td>{{$produto->id}}</td>
+                                                <td>{{$produto->nome}}</td>
                                             </tr>
                                             @endforeach
                                             
